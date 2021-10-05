@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Contact{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block navbar %}
+{{parent()}}
+
+<main>
+    <h1>Page de contact</h1>
+
+   
+
+
+<div class="container">  
+    {{form_start(form)}}
+
+    {# {{form_label(form.nom, 'votre nom :')}} #}
+    {{form_widget(form.nom, {'attr':{'class':'', 'placeholder':'Votre nom'}})}}
+
+    {# {{form_label(form.email, 'votre Email :')}} #}
+    {{form_widget(form.email, {'attr':{'class':'', 'placeholder':'Votre Email'}})}}
+  
+    {{form_widget(form.sujet, {'attr':{'class':'', 'placeholder':'Sujet de votre message'}})}}
+    {{form_widget(form.message, {'attr':{'class':'', 'placeholder':'Votre message'}})}}
+    {{form_widget(form.envoyer)}}
+
+
+
+
+
+
+    {{form_end(form, {render_rest: true})}}
+
+ 
+  
+</div>
+
+</main>
+
+{% endblock %}

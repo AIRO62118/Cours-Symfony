@@ -1,0 +1,43 @@
+$fichier=new Fichier();
+        $form = $this->createForm(AjoutFichierType::class,$fichier);
+
+        if($request->isMethod('POST')){
+            $form->handlerequest($request);
+            if($form->isSubmitted() && $form->isValid()){
+
+                //Récupérer une donnée non mappé
+                $idTheme = $form->get('theme')->getData();
+                $idTheme = $this->getDoctrine()->getRepository(Theme::class)->find($idTheme);
+
+                //Récupération du fichier
+                $fichierPhysique = $fichier->getNom();
+                
+                $fichier->setDate(new \DateTime());
+                $ext = '';
+                
+                //Je protège mon guessExtension qui renvoie null
+                if($fichierPhysique->guessExtension() != null){
+                    $ext = $fichierPhysique->guessExtension();
+                }
+                $fichier->setExtension($ext);
+                $fichier->setTaille($fichierPhysique->getSize());
+
+                $fichier->setNom(md5(uniqid()));
+                $fichier->addTheme($idTheme);
+                try{
+                    $fichierPhysique->move($this->getParameter('file_directory'), $fichier->getNom());
+                    $this->addFlash('notice','Fichier envoyé');
+                    
+                    $em = $this->getDoctrine()->getManager();
+                    $em->persist($fichier);
+                    $em->flush();
+                }
+                catch(\FileException $e){
+                    $this->addFlash('notice','Problème d\'envoi');
+
+                }
+                
+
+                return $this->redirectToRoute('ajout-fichier');
+            }
+        }

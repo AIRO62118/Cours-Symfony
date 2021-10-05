@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Contact{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block navbar %}
+{{parent()}}
+
+<main>
+    <h1>Page d'ajout de thème</h1>
+
+   
+
+
+<div class="container">  
+    {{form_start(form)}}
+
+    {# {{form_label(form.nom, 'votre nom :')}} #}
+    {{form_widget(form.nom, {'attr':{'class':'', 'placeholder':'Le nom'}})}}
+    {{form_widget(form.envoyer)}}
+
+
+
+
+
+
+    {{form_end(form, {render_rest: true})}}
+
+ 
+  
+</div>
+
+</main>
+
+{% endblock %}

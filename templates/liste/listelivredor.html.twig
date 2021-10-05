@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Liste des livres{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block navbar %}
+{{parent()}}
+<main>
+
+    <h1>Liste des Livre d'or envoyé</h1>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Message</th>
+
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for livre in livre %}
+                <tr>
+    <!--            <tr class="{{cycle(['table-primary', 'table-secondary'], loop.index0)}}"> -->
+                    <td>{{livre.nom |capitalize }}</td>
+                    <td>{{livre.email |capitalize }}</td>
+                    <td>{{livre.message |capitalize }}</td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+</main>
+{% endblock %}
