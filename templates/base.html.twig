@@ -16,8 +16,6 @@
     <body>
         {% block navbar %}
 
-      
-        
         <nav class="navbar">
         <ul class="navbar-nav">
             <li class="logo">
@@ -208,7 +206,9 @@
         </ul>
     </nav>
 
+    {% endblock %}
 
+      {% block contenu %}
 
         <main>
           {% for message in app.flashes('notice')%}
@@ -218,11 +218,8 @@
             </div> 
           {% endfor %}
         </main>
-        
-        
-        {% endblock %}
 
-
+      {% endblock %}
 
 
 
@@ -232,7 +229,10 @@
 
         {% endblock %}
 
+      {% block footer %}
 
+
+      {% endblock %}
 
         
     </body>

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{parent()}}Accueil{% endblock %}
+{% block title %}{{parent()}}Modification des livres d'ors{% endblock %}
 
 {% block stylesheets %}
 {{parent()}}
@@ -13,8 +13,13 @@
 {% block contenu %}
 {{parent()}}
 <main>
-        <h1>Mention !
-</h1>
+    <h1>Modification du livre d'or</h1>
 
-    </main>
+{{form(form)}}
+
+
+</main>
+
+
+
 {% endblock %}

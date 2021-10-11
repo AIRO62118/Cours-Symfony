@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{parent()}}Accueil{% endblock %}
+{% block title %}{{parent()}}Liste des utilisateurs{% endblock %}
 
 {% block stylesheets %}
 {{parent()}}
@@ -12,9 +12,15 @@
 
 {% block contenu %}
 {{parent()}}
-<main>
-        <h1>Mention !
-</h1>
 
-    </main>
+<main>
+    <h1>Liste des utilisateurs</h1>
+
+{{form(form)}}
+
+
+</main>
+
+
+
 {% endblock %}
