@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Liste des utilisateurs{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block navbar %}
+{{parent()}}
+
+<main>
+    <h1>Liste des utilisateurs</h1>
+
+{{form(form)}}
+
+
+</main>
+
+
+
+{% endblock %}

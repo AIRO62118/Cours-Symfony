@@ -24,7 +24,6 @@ class FichierController extends AbstractController
         $doctrine = $this->getDoctrine();
         $em = $this->getDoctrine()->getManager();
 
-
         if($request->get('id') != null){
             $f = $doctrine->getRepository(Fichier::class)->find($request->get('id'));
             try{
@@ -65,7 +64,7 @@ class FichierController extends AbstractController
                 }
                 $fichier->setExtension($ext);
                 $fichier->setTaille($fichierPhysique->getSize());
-                $fichier->setchampOriginal($fichierPhysique->getClientOriginalName());
+                $fichier->setChampOriginal($fichierPhysique->getClientOriginalName());
                 $fichier->setNom(md5(uniqid()));
                 //$fichier->addTheme($idTheme);
                 try{
@@ -87,4 +86,18 @@ class FichierController extends AbstractController
         }
         return $this->render('fichier/ajout-fichier.html.twig', ['form' => $form->createView(), 'fichiers' => $fichiers]);
     }
+
+    #[Route('/telechargement-fichier/{id}', name: 'telechargement-fichier', requirements: ["id" => "\d+"])]
+    public function telechargementFichier(int $id){
+        $doctrine = $this->getDoctrine();
+        $repoFichier = $doctrine->getRepository(Fichier::class);
+        $fichier = $repoFichier->find($id);
+
+        if($fichier == null){
+            $this->redirectToRoute('ajout-fichier');
+        } else {
+            return $this->file($this->getParameter('file_directory').'/'.$fichier->getNom(),$fichier->getChampOriginal());
+        }
+    }
+
 }
