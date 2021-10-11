@@ -6,13 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 use App\Form\ContactType;
 use App\Form\LivredorType;
 use App\Form\InscriptionType;
+use App\Form\AjoutUserType;
+
+
 use App\Entity\Contact;
 use App\Entity\Livredor;
 use App\Entity\Utilisateur;
+use App\Entity\User;
+
 
 
 class StaticController extends AbstractController
@@ -117,11 +123,6 @@ class StaticController extends AbstractController
          return $this->render('static/apropos.html.twig', []);
      }
 
-
-
-         
-
-
 #[Route('/inscription', name: 'inscription')]
 public function inscription(Request $request): Response
 {
@@ -130,7 +131,7 @@ public function inscription(Request $request): Response
 
     if($request->isMethod('POST')){
         $form->handleRequest($request);
-        if($form->isSubmitted()&&$form->isValid()){
+        if($form->isSubmitted() && $form->isValid()){
             $this->addFlash('notice','Inscription réussie');
 
 
@@ -144,4 +145,31 @@ public function inscription(Request $request): Response
 
      return $this->render('static/inscription.html.twig', ['form' => $form->createView()]);
  }
+
+#[Route('/ajout-user', name: 'ajout-user')]
+ public function ajoutUser(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+ {
+     $user = new User();
+     $form = $this->createForm(AjoutUserType::class, $user);
+
+     if($request->isMethod('POST')){
+        $form->handleRequest($request);
+        if($form->isSubmitted()&& $form->isValid()){
+            $user->setRoles(array('ROLE_USER'));
+            
+            $user->setPassword($passwordHasher->hashPassword($user,$user->getPassword()));
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+            $this->addFlash('notice', 'Inscription réussie');
+            return $this->redirectToRoute('app_login');
+        }
+     }
+     return $this->render('static/ajout-user.html.twig', ['form' => $form->createView()]);
+
+    }
+
+
+
+
 }
