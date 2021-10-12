@@ -51,6 +51,11 @@ class Utilisateur
      */
     private $fichiers;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="utilisateur", cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->telechargers = new ArrayCollection();
@@ -172,6 +177,25 @@ class Utilisateur
 
         return $this;
     }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(User $user): self
+    {
+        // set the owning side of the relation if necessary
+        if ($user->getUtilisateur() !== $this) {
+            $user->setUtilisateur($this);
+        }
+
+        $this->user = $user;
+
+        return $this;
+    }
+
+    
 
     
 }

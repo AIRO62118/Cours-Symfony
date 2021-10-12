@@ -11,6 +11,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Form\ContactType;
 use App\Form\LivredorType;
 use App\Form\InscriptionType;
+use App\Form\InscriptionCompleteType;
 use App\Form\AjoutUserType;
 
 
@@ -144,6 +145,38 @@ public function inscription(Request $request): Response
     }
 
      return $this->render('static/inscription.html.twig', ['form' => $form->createView()]);
+ }
+
+ #[Route('/inscriptionComplete', name: 'inscriptionComplete')]
+ public function inscriptionComplete(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+ {
+     //chien de martin
+     $utilisateur = new Utilisateur();
+     $user = new User();
+     $utilisateur->setUser($user);
+     $user->setUtilisateur($utilisateur);
+     $form = $this->createForm(InscriptionCompleteType::class,$utilisateur);
+     if ($request->isMethod('POST')){
+         $form->handleRequest($request);
+         if($form->isSubmitted()&&$form->isValid()){
+
+             $user->setEmail($form->get('email')->getData());
+             $user->setPassword($passwordHasher->hashPassword($user,$form->get('password')->getData()));
+             $user->setRoles(array('ROLE_USER'));
+
+             $em = $this->getDoctrine()->getManager();
+
+             $em->persist($utilisateur);
+             $em->persist($user);
+
+             $em->flush();
+             return $this->redirectToRoute('inscriptionComplete');
+         }
+     }
+
+     return $this->render('static/inscriptionComplete.html.twig', [
+         'form' => $form->createView()
+     ]);
  }
 
 #[Route('/ajout-user', name: 'ajout-user')]

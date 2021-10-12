@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{parent()}}Inscription{% endblock %}
+
+{% block stylesheets %}
+{{parent()}}
+{% endblock %}
+
+{% block navbar %}
+{{parent()}}
+{% endblock %}
+
+{% block contenu %}
+{{parent()}}
+<main>
+        <h1>Inscrivez-vous !
+</h1>
+{{form(form)}}
+    </main>
+{% endblock %}
