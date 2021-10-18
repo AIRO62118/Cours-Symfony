@@ -1,0 +1,154 @@
+package com.example.beermaker;
+
+import static com.example.beermaker.R.id.etape_texte1;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Etape_fabrication extends AppCompatActivity {
+
+    TextView etape_texte;
+    ImageButton droit;
+    ImageButton gauche;
+    int ctp = 1;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.etape_fabrication);
+        init();
+        click_droite();
+        click_gauche();
+        letexte();
+    }
+
+    public void init(){
+        etape_texte = findViewById(R.id.etape_texte1);
+        droit = findViewById(R.id.imageButtonDroite);
+        gauche = findViewById(R.id.imageButtonGauche);
+    }
+
+    private void click_droite() {
+        droit.setOnClickListener(view -> {
+            ctp++;
+            letexte();
+        });
+    }
+    private void click_gauche() {
+        gauche.setOnClickListener(view -> {
+            ctp--;
+            letexte();
+        });
+    }
+
+    private void letexte() {
+        if (ctp == 1) {
+            etape_texte.setText("Au préalable:\n" +
+                    "Vous allez avoir besoin du matériel suivant pour réaliser votre bière :\n" +
+                    "- Une dame-jeanne -un barboteur\n" +
+                    "- un thermomètre -un tuyau d’extraction avec un embout anti-lie\n" +
+                    "- plusieurs casseroles -une cuillère percée\n" +
+                    "- une passoire à mailles fines - bouteilles en verre à clapet\n" +
+                    "Le matériel utile à la fabrication doit être propre et stérilisé. Nous vous conseillons\n" +
+                    "d’utiliser un désinfectant en poudre vendu dans le commerce et de vous fier aux\n" +
+                    "instruction (à diluer dans de l’eau dans laquelle il faut faire tremper le matériel quelques\n" +
+                    "minutes)");
+            gauche.setVisibility(View.INVISIBLE);
+        } else if(ctp == 2){
+            gauche.setVisibility(View.VISIBLE);
+            etape_texte.setText("1. L'empâtage\n" +
+                    "Note: Le malt blond peut s'utiliser seul. Les malts plus foncés ne s’utilisent qu’en petite\n" +
+                    "dose pour moduler le goût de la bière.\n" +
+                    "Si vous avez achetez du malt en grain entier, le concasser avec un moulin à céréales, un\n" +
+                    "mixer ou encore un rouleau à pâtisserie.\n" +
+                    "Définissez la quantité d’eau de brassage nécessaire, puis versez la dans une grande\n" +
+                    "casserole.\n" +
+                    "Porter cette eau à une température de 50 °C en vérifiant avec le thermomètre, puis ajouter\n" +
+                    "le malt concassé.\n");
+        }else if(ctp == 3){
+            etape_texte.setText("2. Le brassage par paliers\n" +
+                    "Brasser la mixture malt+eau, appelée maîshe, pendant 30 min, à 40°C environ.\n" +
+                    "Remuer avec une grande cuillère percée durant la chauffe et laisser reposer une fois la\n" +
+                    "température du palier atteinte.\n" +
+                    "Monter en température la maîshe à 60-65°C et maintenir cette température environ 30\n" +
+                    "min. Augmenter la température à 68-70°C et maintenir cette température environ 30 min.\n" +
+                    "Augmenter la température à 78°C et maintenir cette température environ 30 min.");
+        }else if(ctp == 4){
+            etape_texte.setText("3. Filtrer la maîshe\n" +
+                    "Au dessus d’une seconde casserole, verser la maîshe dans une grande passoie (tapisser\n" +
+                    "si besoin d’un linge propre) pour obtenir la drêche (résidu solide du malt).\n" +
+                    "Pour récupérer les sucres restants dans la drêche égouttée, verser au-dessus de la\n" +
+                    "drêche l’eau de rinçage préalablement montée à 80°C.\n" +
+                    "L’eau de brassage associé à l’eau de rinçage s’appelle le moût. Les résidus de malt sont\n" +
+                    "compostables.");
+        }else if(ctp == 5){
+            etape_texte.setText("4. Le houblonnage\n" +
+                    "Calculer la quantité de houblon à ajouter. Différentes recettes existent, les houblons\n" +
+                    "peuvent être complétés par des épices. Faites bouillir le moût. Dès que l'ébullition\n" +
+                    "commence, écumer et ajouter le houblon amer. Laisser bouillir ce mélange sans couvrir\n" +
+                    "pendant 1h30 pour retirer de l’amertume. 10-15 minutes avant la fin de cette ébullition,\n" +
+                    "ajouter le houblin aromatique. Retirer le houblon en le filtrant. Éviter cette étape en plaçant\n" +
+                    "le houblon dans un filtre à thé en papier. Le choix du houblon doit être fait en fonction de\n" +
+                    "son taux IBU qui est l’unité d’amertume.");
+        }else if(ctp == 6){
+            droit.setVisibility(View.VISIBLE);
+            etape_texte.setText("5. La fermentation\n" +
+                    "Le moût doit être refroidi à une température de 20-25°C pour y incorporer les levures puis\n" +
+                    "transvasé dans la dame-jeanne.\n" +
+                    "Il existe différentes levures. Nous vous recommandons d’utiliser des levures sèches qui\n" +
+                    "sont mieux adaptées pour des petits brassins. Se référer à l’emballage pour déterminer au\n" +
+                    "mieux la quantité appropriée. Il est recommandé d’utiliser pour débuter de la levure S33\n" +
+                    "qui est polyvalente. Incorporer la levure et remuer la bonbonne pour mélanger. Dans une\n" +
+                    "pièce à 20°C, fermer la bonbonne et placer le barboter (qui permet d’évacuer l’oxygène).\n" +
+                    "Durant environ une semaine, les levures vont travailler et générer du CO2 dans la\n" +
+                    "bonbonne, qui va s’évacuer par le barboteur. Remuer de temps en temps la bonbonne\n" +
+                    "pour faire évacuer le CO2.\n" +
+                    "Lorsqu’il n’y a plus d’activité dans le barboteur, mettre la bouteille de fermentation dans\n" +
+                    "une pièce plus fraîche (autour de 10-15°C, comme une cave par exemple).\n" +
+                    "La bière peut ainsi maturer pendant 1 à 3 semaines, cette période de fermentation\n" +
+                    "secondaire se nomme la garde.\n" +
+                    "Ajouter selon recette des épices, fruits, ...");
+        }else if(ctp == 7){
+            etape_texte.setText("6. Le sucrage\n" +
+                    "Pour relancer la fermentation qui se fera en bouteille et qui permet d’obtenir de la mousse,\n" +
+                    "incorporer 4 à 6 g de sucre par litre de bière.");
+        }else if(ctp == 8){
+            droit.setVisibility(View.INVISIBLE);
+            etape_texte.setText("7. La mise en bouteille\n" +
+                    "Mettre en bouteille (stérilisées et séchées) en utilisant un tuyau d'extraction avec embout\n" +
+                    "anti-lie.\n" +
+                    "Le but est de récupérer le liquide clair et d’éliminer les précipités et dépots. placer\n" +
+                    "l’embout anti-lie sur le fond de la bonbonne et l’autre bout au fond de la bouteille. La\n" +
+                    "bonbonne doit être placée très en hauteur par rapport à la bouteille.\n" +
+                    "Utiliser des bouteilles en verre teinté propres et sèches, qui ferment avec un bouchon à\n" +
+                    "vis ou à clapet. Les bouteilles doivent être conservées verticalement.\n" +
+                    "Pendant une semaine conserver ces bouteilles à 20°C. Puis pendant 4 à 8 semaines, les\n" +
+                    "gardes au frais, entre 6 et 10°C.\n" +
+                    "La bière se conserve 1 an, idéalement entre 10 et 15°C à l’abri de la lumière ou\n" +
+                    "simplement au réfrigérateur.\n");
+        }
+    }
+}
+
+    © 2021 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Docs
+
+    Contact GitHub
+    Pricing
+    API
+    Training
+    Blog
+    About
+
+Loading complete

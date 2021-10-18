@@ -14,12 +14,10 @@ use App\Form\InscriptionType;
 use App\Form\InscriptionCompleteType;
 use App\Form\AjoutUserType;
 
-
 use App\Entity\Contact;
 use App\Entity\Livredor;
 use App\Entity\Utilisateur;
 use App\Entity\User;
-
 
 
 class StaticController extends AbstractController
@@ -172,9 +170,7 @@ class StaticController extends AbstractController
             }
         }
 
-        return $this->render('static/inscriptionComplete.html.twig', [
-            'form' => $form->createView()
-        ]);
+        return $this->render('static/inscriptionComplete.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/ajout-user', name: 'ajout-user')]
@@ -200,12 +196,6 @@ class StaticController extends AbstractController
 
     }
 
-    #[Route('/profil', name: 'profil')]
-    public function profil(Request $request): Response
-    {
-        
-
-        return $this->render('static/profil.html.twig', []);
- }
+    
 
 }
